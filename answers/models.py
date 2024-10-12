@@ -69,8 +69,13 @@ class NumericAnswer(Answer):
     def __str__(self):
         return self.numeric_value
 
-
-class MatrixAnswer(Answer):
+#It doesn't inherit from Answer. Because it is already indirectly related to MatrixQuestion through 'row' and 'column'. So we don't need a direct FK to Question in this model.
+class MatrixAnswer(models.Model):
+    response = models.ForeignKey(
+        Response,
+        related_name='answers',
+        on_delete=models.CASCADE
+        )
     row = models.ForeignKey(
         MatrixRow,
         related_name='answers',
