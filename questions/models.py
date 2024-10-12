@@ -2,18 +2,6 @@ from django.db import models
 
 from surveys.models import Survey
 
-class QuestionType(models.Model):
-    title = models.CharField(max_length=32)
-
-    class Meta:
-        verbose_name = 'Question Type'
-        verbose_name_plural = 'Question Types'
-        ordering = ['title']
-
-    def __str__(self):
-        return self.title
-
-
 class Question(models.Model):
     title = models.TextField()
     description = models.TextField(blank=True)
@@ -21,11 +9,6 @@ class Question(models.Model):
     is_required = models.BooleanField(default=True)
     survey = models.ForeignKey(
         Survey,
-        related_name='questions',
-        on_delete=models.CASCADE
-        )
-    type = models.ForeignKey(
-        QuestionType,
         related_name='questions',
         on_delete=models.CASCADE
         )
