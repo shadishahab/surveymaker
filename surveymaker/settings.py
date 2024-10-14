@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'questions.apps.QuestionsConfig',
     'surveys.apps.SurveysConfig',
     'users.apps.UsersConfig',
-    'rest_framework'
+    'rest_framework',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
