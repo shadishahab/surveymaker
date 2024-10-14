@@ -7,6 +7,14 @@ class ResponseCreateAPIView(CreateAPIView):
     serializer_class = ResponseSerializer
 
 
+class ResponseListAPIView(CreateAPIView):
+    serializer_class = ResponseSerializer
+
+    def get_queryset(self):
+        survey_id = self.kwargs['survey_id']
+        return Response.objects.filter(survey_id=survey_id)
+
+
 class DescriptiveAnswerCreateAPIView(CreateAPIView):
     queryset = DescriptiveAnswer.objects.all()
     serializer_class = DescriptiveAnswerSerializer

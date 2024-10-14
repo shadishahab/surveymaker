@@ -6,10 +6,12 @@ from .views import (
     MultipleChoiceAnswerCreateAPIView,
     NumericAnswerCreateAPIView,
     MatrixAnswerCreateAPIView,
+    ResponseListAPIView,
 )
 
 urlpatterns = [
-    path('responses/', ResponseCreateAPIView.as_view(), name='response-create'),
+    path('responses/create', ResponseCreateAPIView.as_view(), name='response-create'),
+    path('responses/list/<int:survey_id>/', ResponseListAPIView.as_view(), name='response-list'),
     path('descriptive/', DescriptiveAnswerCreateAPIView.as_view(), name='descriptive-answer-create'),
     path('multiple-choice/', MultipleChoiceAnswerCreateAPIView.as_view(), name='multiple-choice-answer-create'),
     path('numeric/', NumericAnswerCreateAPIView.as_view(), name='numeric-answer-create'),
