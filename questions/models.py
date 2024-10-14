@@ -9,7 +9,7 @@ class Question(models.Model):
     is_required = models.BooleanField(default=True)
     survey = models.ForeignKey(
         Survey,
-        related_name='questions',
+        related_name='%(class)ss',
         on_delete=models.CASCADE
         )
 

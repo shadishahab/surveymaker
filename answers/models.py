@@ -1,6 +1,13 @@
 from django.db import models
 
-from questions.models import Choice, MatrixColumn, MatrixOption, MatrixRow, Question
+from questions.models import (
+    Choice,
+    MatrixColumn,
+    MatrixRow,
+    DescriptiveQuestion,
+    MultipleChoiceQuestion,
+    NumericQuestion,
+    )
 from surveys.models import Survey
 
 class Response(models.Model):
@@ -21,12 +28,7 @@ class Response(models.Model):
 class Answer(models.Model):
     response = models.ForeignKey(
         Response,
-        related_name='answers',
-        on_delete=models.CASCADE
-        )
-    question = models.ForeignKey(
-        Question,
-        related_name='answers',
+        related_name='%(class)ss',
         on_delete=models.CASCADE
         )
 
@@ -36,7 +38,12 @@ class Answer(models.Model):
 
 class DescriptiveAnswer(Answer):
     answer_text = models.TextField()
-
+    question = models.ForeignKey(
+        DescriptiveQuestion,
+        related_name='answers',
+        on_delete=models.CASCADE
+        )
+    
     class Meta:
         verbose_name = 'Descriptive Answer'
         verbose_name_plural = 'Descriptive Answers'
@@ -48,6 +55,11 @@ class DescriptiveAnswer(Answer):
 
 class MultipleChoiceAnswer(Answer):
     selected_choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    question = models.ForeignKey(
+        MultipleChoiceQuestion,
+        related_name='answers',
+        on_delete=models.CASCADE
+        )
 
     class Meta:
         verbose_name = 'Multiple Choice Answer'
@@ -59,7 +71,12 @@ class MultipleChoiceAnswer(Answer):
 
 
 class NumericAnswer(Answer):
-    numeric_value = models.FloatField()
+    numeric_value = models.IntegerField()
+    question = models.ForeignKey(
+        NumericQuestion,
+        related_name='answers',
+        on_delete=models.CASCADE
+        )
 
     class Meta:
         verbose_name = 'Numeric Answer'
@@ -73,7 +90,7 @@ class NumericAnswer(Answer):
 class MatrixAnswer(models.Model):
     response = models.ForeignKey(
         Response,
-        related_name='answers',
+        related_name='matrixanswers',
         on_delete=models.CASCADE
         )
     row = models.ForeignKey(
